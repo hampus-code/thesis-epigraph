@@ -1,22 +1,42 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { auth } from "../../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginScreen() {
-  const [userInput, setUserInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        Alert.alert("Login Succeeded");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert("Login Failed", errorMessage, errorCode);
+      });
+  };
 
   return (
     <View style={styles.container}>
       <Text>Login Screen</Text>
       <TextInput
         style={styles.textInput}
-        onChangeText={setUserInput}
+        value={email}
+        onChangeText={setEmail}
         placeholder="Email"
       />
       <TextInput
         style={styles.textInput}
-        onChangeText={setUserInput}
+        value={password}
+        onChangeText={setPassword}
         placeholder="Password"
+        secureTextEntry={true}
       />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }

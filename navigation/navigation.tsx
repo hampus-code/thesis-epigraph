@@ -20,7 +20,7 @@ export default function RootStack() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }} // optional
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
