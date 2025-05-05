@@ -1,10 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import RootStack from "./navigation/navigation";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <RootStack />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
