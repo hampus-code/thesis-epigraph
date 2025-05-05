@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/unauthentication/LoginScreen";
 import HomeScreen from "../screens/authentication/HomeScreen";
+import BottomNavigationBar from "./bottomNavigationBar";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -26,7 +27,7 @@ export default function RootStack() {
       />
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={BottomNavigationBar}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
