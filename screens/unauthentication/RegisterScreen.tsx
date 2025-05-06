@@ -1,14 +1,33 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { RootStackParamList } from "../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const handleRegister = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorCode === "auth/email-already-in-use") {
+          Alert.alert("Account already exists", errorMessage);
+        } else {
+          Alert.alert("Registration failed", errorMessage);
+        }
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -42,7 +61,7 @@ export default function RegisterScreen() {
       <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
         Already have an account?
       </Text>
-      <Button style={styles.button} mode="outlined">
+      <Button style={styles.button} mode="outlined" onPress={handleRegister}>
         Register
       </Button>
     </View>
