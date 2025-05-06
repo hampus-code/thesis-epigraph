@@ -26,7 +26,7 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
+      <Text>Login</Text>
       <TextInput
         style={styles.textInput}
         value={email}
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   text: {
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
+    marginTop: 10
   }
 });
