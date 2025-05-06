@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Alert, View } from "react-native";
 import { auth } from "../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/navigation";
+import { Button, Text, TextInput } from "react-native-paper";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -20,18 +21,25 @@ export default function LoginScreen() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        Alert.alert("Login Failed", errorMessage, errorCode);
+        if (errorCode === "auth/invalid-credential") {
+          Alert.alert("Wrong credentials", errorMessage);
+        } else {
+          Alert.alert("Login Failed", errorMessage);
+        }
       });
   };
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text style={styles.titleText}>Login</Text>
       <TextInput
         style={styles.textInput}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
+        mode="outlined"
+        theme={{ roundness: 20 }}
+        left={<TextInput.Icon icon={"account"} />}
       />
       <TextInput
         style={styles.textInput}
@@ -39,11 +47,16 @@ export default function LoginScreen() {
         onChangeText={setPassword}
         placeholder="Password"
         secureTextEntry={true}
+        mode="outlined"
+        theme={{ roundness: 20 }}
+        left={<TextInput.Icon icon={"lock"} />}
       />
       <Text style={styles.text} onPress={() => navigation.navigate("Register")}>
         Don't have an account?
       </Text>
-      <Button title="Login" onPress={handleLogin} />
+      <Button style={styles.button} mode="outlined" onPress={handleLogin}>
+        Login
+      </Button>
     </View>
   );
 }
@@ -55,14 +68,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  titleText: {
+    fontSize: 30
+  },
   textInput: {
-    borderWidth: 1,
     width: 250,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 10
   },
   text: {
     textDecorationLine: "underline",
+    marginTop: 10
+  },
+  button: {
     marginTop: 10
   }
 });
