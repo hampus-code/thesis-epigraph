@@ -26,7 +26,7 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
+      <Text>Login</Text>
       <TextInput
         style={styles.textInput}
         value={email}
@@ -40,6 +40,9 @@ export default function LoginScreen() {
         placeholder="Password"
         secureTextEntry={true}
       />
+      <Text style={styles.text} onPress={() => navigation.navigate("Register")}>
+        Don't have an account?
+      </Text>
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
@@ -56,6 +59,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 250,
     borderRadius: 10,
+    marginTop: 10
+  },
+  text: {
+    textDecorationLine: "underline",
     marginTop: 10
   }
 });
