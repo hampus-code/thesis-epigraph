@@ -40,6 +40,7 @@ export default function LoginScreen() {
         placeholder="Password"
         secureTextEntry={true}
       />
+      <Text style={styles.text}>Don't have an account?</Text>
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
@@ -57,5 +58,8 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 10,
     marginTop: 10
+  },
+  text: {
+    textDecorationLine: "underline"
   }
 });
