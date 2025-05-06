@@ -9,6 +9,8 @@ import { auth } from "../../firebaseConfig";
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const isSecure = useState(true);
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -39,6 +41,7 @@ export default function RegisterScreen() {
         placeholder="Email"
         mode="outlined"
         theme={{ roundness: 20 }}
+        left={<TextInput.Icon icon={"account"} />}
       />
       <TextInput
         style={styles.textInput}
@@ -48,15 +51,19 @@ export default function RegisterScreen() {
         secureTextEntry={true}
         mode="outlined"
         theme={{ roundness: 20 }}
+        left={<TextInput.Icon icon={"lock"} />}
+        right={<TextInput.Icon icon={"eye-off"} />}
       />
       <TextInput
         style={styles.textInput}
-        value={password}
-        onChangeText={setPassword}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
         placeholder="Confirm Password"
         secureTextEntry={true}
         mode="outlined"
         theme={{ roundness: 20 }}
+        left={<TextInput.Icon icon={"lock"} />}
+        right={<TextInput.Icon icon={"eye-off"} />}
       />
       <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
         Already have an account?
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   textInput: {
-    width: 250,
+    width: 300,
     borderRadius: 20,
     marginTop: 10
   },
