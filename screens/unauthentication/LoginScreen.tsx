@@ -40,7 +40,9 @@ export default function LoginScreen() {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <Text style={styles.text}>Don't have an account?</Text>
+      <Text style={styles.text} onPress={() => navigation.navigate("Register")}>
+        Don't have an account?
+      </Text>
       <Button title="Login" onPress={handleLogin} />
     </View>
   );
