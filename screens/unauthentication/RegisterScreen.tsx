@@ -5,6 +5,7 @@ import { RootStackParamList } from "../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
+import FormButton from "../../components/button/FormButton";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -73,9 +74,7 @@ export default function RegisterScreen() {
         <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
           Already have an account?
         </Text>
-        <Button style={styles.button} mode="outlined" onPress={handleRegister}>
-          Register
-        </Button>
+        <FormButton label="Register" onPress={handleRegister} />
       </View>
     </View>
   );
@@ -105,9 +104,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textDecorationLine: "underline",
-    marginTop: 10
-  },
-  button: {
     marginTop: 10
   },
   image: {
