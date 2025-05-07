@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
+import FormButton from "../../components/button/FormButton";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -62,9 +63,7 @@ export default function LoginScreen() {
         >
           Don't have an account?
         </Text>
-        <Button style={styles.button} mode="outlined" onPress={handleLogin}>
-          Login
-        </Button>
+        <FormButton label="Login" onPress={handleLogin} />
       </View>
     </View>
   );
@@ -94,9 +93,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textDecorationLine: "underline",
-    marginTop: 10
-  },
-  button: {
     marginTop: 10
   },
   image: {
