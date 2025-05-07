@@ -52,7 +52,7 @@ export default function LoginScreen() {
           placeholder="Password"
           leftIcon={<TextInput.Icon icon={"lock"} />}
           rightIcon={<TextInput.Icon icon={"eye-off"} />}
-          secureOrNot={false}
+          secureOrNot={true}
         />
         <Text
           style={styles.text}
