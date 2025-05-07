@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Image } from "react-native";
 import { RootStackParamList } from "../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -32,55 +32,68 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Register</Text>
-      <TextInput
-        style={styles.textInput}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-        mode="outlined"
-        theme={{ roundness: 20 }}
-        left={<TextInput.Icon icon={"account"} />}
+    <View style={styles.wrapper}>
+      <Image
+        style={styles.image}
+        source={require("../../assets/epigraph-logo.png")}
       />
-      <TextInput
-        style={styles.textInput}
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry={true}
-        mode="outlined"
-        theme={{ roundness: 20 }}
-        left={<TextInput.Icon icon={"lock"} />}
-        right={<TextInput.Icon icon={"eye-off"} />}
-      />
-      <TextInput
-        style={styles.textInput}
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        placeholder="Confirm Password"
-        secureTextEntry={true}
-        mode="outlined"
-        theme={{ roundness: 20 }}
-        left={<TextInput.Icon icon={"lock"} />}
-        right={<TextInput.Icon icon={"eye-off"} />}
-      />
-      <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
-        Already have an account?
-      </Text>
-      <Button style={styles.button} mode="outlined" onPress={handleRegister}>
-        Register
-      </Button>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Register</Text>
+        <TextInput
+          style={styles.textInput}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+          mode="outlined"
+          theme={{ roundness: 20 }}
+          left={<TextInput.Icon icon={"account"} />}
+        />
+        <TextInput
+          style={styles.textInput}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Password"
+          secureTextEntry={true}
+          mode="outlined"
+          theme={{ roundness: 20 }}
+          left={<TextInput.Icon icon={"lock"} />}
+          right={<TextInput.Icon icon={"eye-off"} />}
+        />
+        <TextInput
+          style={styles.textInput}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Confirm Password"
+          secureTextEntry={true}
+          mode="outlined"
+          theme={{ roundness: 20 }}
+          left={<TextInput.Icon icon={"lock"} />}
+          right={<TextInput.Icon icon={"eye-off"} />}
+        />
+        <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
+          Already have an account?
+        </Text>
+        <Button style={styles.button} mode="outlined" onPress={handleRegister}>
+          Register
+        </Button>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 100
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    marginTop: 75
   },
   titleText: {
     fontSize: 30
@@ -96,5 +109,9 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10
+  },
+  image: {
+    width: 150,
+    height: 150
   }
 });
