@@ -6,6 +6,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
 import FormButton from "../../components/button/FormButton";
+import CustomTextInput from "../../components/input/CustomTextInput";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -38,24 +39,20 @@ export default function LoginScreen() {
       />
       <View style={styles.container}>
         <Text style={styles.titleText}>Login</Text>
-        <TextInput
-          style={styles.textInput}
+        <CustomTextInput
           value={email}
           onChangeText={setEmail}
           placeholder="Email"
-          mode="outlined"
-          theme={{ roundness: 20 }}
-          left={<TextInput.Icon icon={"account"} />}
+          leftIcon={<TextInput.Icon icon={"account"} />}
+          secureOrNot={false}
         />
-        <TextInput
-          style={styles.textInput}
+        <CustomTextInput
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
-          secureTextEntry={true}
-          mode="outlined"
-          theme={{ roundness: 20 }}
-          left={<TextInput.Icon icon={"lock"} />}
+          leftIcon={<TextInput.Icon icon={"lock"} />}
+          rightIcon={<TextInput.Icon icon={"eye-off"} />}
+          secureOrNot={false}
         />
         <Text
           style={styles.text}

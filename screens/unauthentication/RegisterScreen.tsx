@@ -6,6 +6,7 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import FormButton from "../../components/button/FormButton";
+import CustomTextInput from "../../components/input/CustomTextInput";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -40,36 +41,28 @@ export default function RegisterScreen() {
       />
       <View style={styles.container}>
         <Text style={styles.titleText}>Register</Text>
-        <TextInput
-          style={styles.textInput}
+        <CustomTextInput
           value={email}
           onChangeText={setEmail}
           placeholder="Email"
-          mode="outlined"
-          theme={{ roundness: 20 }}
-          left={<TextInput.Icon icon={"account"} />}
+          leftIcon={<TextInput.Icon icon={"account"} />}
+          secureOrNot={false}
         />
-        <TextInput
-          style={styles.textInput}
+        <CustomTextInput
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
-          secureTextEntry={true}
-          mode="outlined"
-          theme={{ roundness: 20 }}
-          left={<TextInput.Icon icon={"lock"} />}
-          right={<TextInput.Icon icon={"eye-off"} />}
+          secureOrNot={true}
+          leftIcon={<TextInput.Icon icon={"lock"} />}
+          rightIcon={<TextInput.Icon icon={"eye-off"} />}
         />
-        <TextInput
-          style={styles.textInput}
+        <CustomTextInput
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           placeholder="Confirm Password"
-          secureTextEntry={true}
-          mode="outlined"
-          theme={{ roundness: 20 }}
-          left={<TextInput.Icon icon={"lock"} />}
-          right={<TextInput.Icon icon={"eye-off"} />}
+          secureOrNot={true}
+          leftIcon={<TextInput.Icon icon={"lock"} />}
+          rightIcon={<TextInput.Icon icon={"eye-off"} />}
         />
         <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
           Already have an account?
