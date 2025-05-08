@@ -42,8 +42,7 @@ export default function BookList({ query }: { query: string }) {
 const styles = StyleSheet.create({
   listContent: {
     alignItems: "center",
-    marginTop: 50,
-    backgroundColor: "blue"
+    marginTop: 50
   },
   activityIndicator: {
     marginTop: 20
