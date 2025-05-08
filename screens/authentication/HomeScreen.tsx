@@ -1,50 +1,28 @@
-import { View, StyleSheet, Text, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard
+} from "react-native";
 import SearchBar from "../../components/searchbar/SearchBar";
-import { useQuery } from "@tanstack/react-query";
-import { searchBook } from "../../api/APIMethods";
-import { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native-paper";
-import BookCard from "../../components/card/BookCard";
+import { useState } from "react";
+import BookList from "../../components/list/BookList";
+import CustomTextInput from "../../components/input/CustomTextInput";
 
 export default function HomeScreen() {
   const [inputSearch, setInputSearch] = useState("");
 
-  const { data: books, isLoading } = useQuery({
-    queryKey: ["books", inputSearch],
-    queryFn: () => searchBook(inputSearch),
-    enabled: inputSearch.trim().length > 0
-  });
-
-  useEffect(() => {
-    if (books && books.length > 0) {
-      console.log("First book title:", books[0].title);
-    } else {
-      console.log("No books returned or books is undefined");
-    }
-  }, [books, inputSearch]);
-
   return (
-    <View style={styles.container}>
-      <SearchBar
-        value={inputSearch}
-        onChangeText={setInputSearch}
-        placeholder="Search books ..."
-      />
-      {isLoading ? (
-        <ActivityIndicator
-          style={styles.activityIndicator}
-          animating={true}
-          size={"large"}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <SearchBar
+          value={inputSearch}
+          onChangeText={setInputSearch}
+          placeholder="Search books ..."
         />
-      ) : (
-        <FlatList
-          contentContainerStyle={styles.listContent}
-          data={books}
-          keyExtractor={(item) => item.key}
-          renderItem={({ item }) => <BookCard book={item} />}
-        />
-      )}
-    </View>
+        <BookList query={inputSearch} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -53,12 +31,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  listContent: {
-    alignItems: "center",
-    marginTop: 50
-  },
-  activityIndicator: {
-    marginTop: 20
   }
 });
