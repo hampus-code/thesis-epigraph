@@ -1,19 +1,18 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert, StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { RootStackParamList } from "../../../navigation/navigation";
 import { Text, TextInput } from "react-native-paper";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../../firebaseConfig";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useAuth } from "../../../hooks/useAuth";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register } = useAuth();
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -37,17 +36,27 @@ export default function RegisterScreen() {
           value={password}
           onChangeText={setPassword}
           placeholder="Password"
-          secureOrNot={true}
+          secureOrNot={!showPassword}
           leftIcon={<TextInput.Icon icon={"lock"} />}
-          rightIcon={<TextInput.Icon icon={"eye-off"} />}
+          rightIcon={
+            <TextInput.Icon
+              icon={showPassword ? "eye" : "eye-off"}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          }
         />
         <CustomTextInput
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           placeholder="Confirm Password"
-          secureOrNot={true}
+          secureOrNot={!showConfirmPassword}
           leftIcon={<TextInput.Icon icon={"lock"} />}
-          rightIcon={<TextInput.Icon icon={"eye-off"} />}
+          rightIcon={
+            <TextInput.Icon
+              icon={showConfirmPassword ? "eye" : "eye-off"}
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            />
+          }
         />
         <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
           Already have an account?

@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, Alert, View, Image } from "react-native";
-import { auth } from "../../../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { StyleSheet, View, Image } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../navigation/navigation";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
 import { useAuth } from "../../../hooks/useAuth";
@@ -12,6 +10,8 @@ import { useAuth } from "../../../hooks/useAuth";
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const { login } = useAuth();
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -36,8 +36,13 @@ export default function LoginScreen() {
           onChangeText={setPassword}
           placeholder="Password"
           leftIcon={<TextInput.Icon icon={"lock"} />}
-          rightIcon={<TextInput.Icon icon={"eye-off"} />}
-          secureOrNot={true}
+          rightIcon={
+            <TextInput.Icon
+              icon={showPassword ? "eye" : "eye-off"}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          }
+          secureOrNot={!showPassword}
         />
         <Text
           style={styles.text}
