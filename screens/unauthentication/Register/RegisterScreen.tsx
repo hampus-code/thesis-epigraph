@@ -1,12 +1,12 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, StyleSheet, View, Image } from "react-native";
-import { RootStackParamList } from "../../navigation/navigation";
+import { RootStackParamList } from "../../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
-import FormButton from "../../components/button/FormButton";
-import CustomTextInput from "../../components/input/CustomTextInput";
+import { auth } from "../../../firebaseConfig";
+import FormButton from "../../../components/button/FormButton";
+import CustomTextInput from "../../../components/input/CustomTextInput";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ export default function RegisterScreen() {
     <View style={styles.wrapper}>
       <Image
         style={styles.image}
-        source={require("../../assets/epigraph-logo.png")}
+        source={require("../../../assets/epigraph-logo.png")}
       />
       <View style={styles.container}>
         <Text style={styles.titleText}>Register</Text>

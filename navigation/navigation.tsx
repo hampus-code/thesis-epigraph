@@ -3,14 +3,20 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps
 } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/unauthentication/LoginScreen";
+import LoginScreen from "../screens/unauthentication/Login/LoginScreen";
 import BottomNavigationBar from "./bottomNavigationBar";
-import RegisterScreen from "../screens/unauthentication/RegisterScreen";
+import RegisterScreen from "../screens/unauthentication/Register/RegisterScreen";
+import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
+import SearchScreen from "../screens/authentication/Search/SearchScreen";
+import SettingsScreen from "../screens/authentication/Settings/SettingsScreen";
 
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Register: undefined;
+  BookList: undefined;
+  Search: undefined;
+  Settings: undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -34,6 +40,21 @@ export default function RootStack() {
       <Stack.Screen
         name="Home"
         component={BottomNavigationBar}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BookList"
+        component={BookListScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

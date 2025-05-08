@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { StyleSheet, Alert, View, Image } from "react-native";
-import { auth } from "../../firebaseConfig";
+import { auth } from "../../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../navigation/navigation";
+import { RootStackParamList } from "../../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
-import FormButton from "../../components/button/FormButton";
-import CustomTextInput from "../../components/input/CustomTextInput";
+import FormButton from "../../../components/button/FormButton";
+import CustomTextInput from "../../../components/input/CustomTextInput";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ export default function LoginScreen() {
     <View style={styles.wrapper}>
       <Image
         style={styles.image}
-        source={require("../../assets/epigraph-logo.png")}
+        source={require("../../../assets/epigraph-logo.png")}
       />
       <View style={styles.container}>
         <Text style={styles.titleText}>Login</Text>
