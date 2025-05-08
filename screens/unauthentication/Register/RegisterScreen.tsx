@@ -2,36 +2,21 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, StyleSheet, View, Image } from "react-native";
 import { RootStackParamList } from "../../../navigation/navigation";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Text, TextInput } from "react-native-paper";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../firebaseConfig";
+import { auth, db } from "../../../firebaseConfig";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const isSecure = useState(true);
+  const { register } = useAuth();
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-  const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigation.navigate("Home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode === "auth/email-already-in-use") {
-          Alert.alert("Account already exists", errorMessage);
-        } else {
-          Alert.alert("Registration failed", errorMessage);
-        }
-      });
-  };
 
   return (
     <View style={styles.wrapper}>
@@ -67,7 +52,10 @@ export default function RegisterScreen() {
         <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
           Already have an account?
         </Text>
-        <FormButton label="Register" onPress={handleRegister} />
+        <FormButton
+          label="Register"
+          onPress={() => register(email, password, confirmPassword)}
+        />
       </View>
     </View>
   );

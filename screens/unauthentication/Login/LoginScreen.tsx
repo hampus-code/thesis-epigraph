@@ -7,29 +7,14 @@ import { RootStackParamList } from "../../../navigation/navigation";
 import { Button, Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        navigation.navigate("Home");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode === "auth/invalid-credential") {
-          Alert.alert("Wrong credentials", errorMessage);
-        } else {
-          Alert.alert("Login Failed", errorMessage);
-        }
-      });
-  };
 
   return (
     <View style={styles.wrapper}>
@@ -60,7 +45,7 @@ export default function LoginScreen() {
         >
           Don't have an account?
         </Text>
-        <FormButton label="Login" onPress={handleLogin} />
+        <FormButton label="Login" onPress={() => login(email, password)} />
       </View>
     </View>
   );
