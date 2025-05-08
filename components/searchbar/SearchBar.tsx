@@ -2,26 +2,28 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
 
-export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = React.useState("");
-
+export default function SearchBar({
+  value,
+  onChangeText,
+  placeholder
+}: {
+  value: string;
+  onChangeText: (inputText: string) => void;
+  placeholder: string;
+}) {
   return (
-    <View style={styles.container}>
+    <View>
       <Searchbar
         style={styles.searchBar}
-        placeholder="Search books ..."
-        onChangeText={setSearchQuery}
-        value={searchQuery}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        value={value}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center"
-  },
   searchBar: {
     marginTop: 50,
     width: 350
