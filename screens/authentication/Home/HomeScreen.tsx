@@ -4,9 +4,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from "react-native";
-import SearchBar from "../../components/searchbar/SearchBar";
+import SearchBar from "../../../components/searchbar/SearchBar";
 import { useState } from "react";
-import BookList from "../../components/list/BookList";
+import BookList from "../../../components/list/BookList";
 
 export default function HomeScreen() {
   const [inputSearch, setInputSearch] = useState("");

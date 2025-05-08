@@ -1,6 +1,9 @@
 import React from "react";
 import { BottomNavigation } from "react-native-paper";
-import HomeScreen from "../screens/authentication/HomeScreen";
+import HomeScreen from "../screens/authentication/Home/HomeScreen";
+import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
+import SearchScreen from "../screens/authentication/Search/SearchScreen";
+import SettingsScreen from "../screens/authentication/Settings/SettingsScreen";
 
 export default function BottomNavigationBar() {
   const [index, setIndex] = React.useState(0);
@@ -32,9 +35,9 @@ export default function BottomNavigationBar() {
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,
-    bookList: HomeScreen,
-    search: HomeScreen,
-    settings: HomeScreen
+    bookList: BookListScreen,
+    search: SearchScreen,
+    settings: SettingsScreen
   });
 
   return (
