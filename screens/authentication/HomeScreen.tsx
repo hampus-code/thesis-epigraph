@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { searchBook } from "../../api/APIMethods";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
+import BookCard from "../../components/card/BookCard";
 
 export interface BookSearchResponse {
   docs: Book[];
@@ -53,7 +54,7 @@ export default function HomeScreen() {
           contentContainerStyle={styles.listContent}
           data={books}
           keyExtractor={(item) => item.key}
-          renderItem={({ item }) => <Text>{item.title}</Text>}
+          renderItem={({ item }) => <BookCard book={item} />}
         />
       )}
     </View>
