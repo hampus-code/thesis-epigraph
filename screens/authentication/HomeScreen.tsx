@@ -6,19 +6,6 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import BookCard from "../../components/card/BookCard";
 
-export interface BookSearchResponse {
-  docs: Book[];
-  numFound: number;
-  q: string;
-  offset: number | null;
-}
-
-export interface Book {
-  key: string;
-  title: string;
-  author_name?: string[];
-}
-
 export default function HomeScreen() {
   const [inputSearch, setInputSearch] = useState("");
 

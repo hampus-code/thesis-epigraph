@@ -1,18 +1,11 @@
-import { Book, BookSearchResponse } from "../screens/authentication/HomeScreen";
+import { IBook } from "../types/IBook";
+import { IBookSearchResponse } from "../types/IBookSearchResponse";
 import { Get } from "./APIConfig";
 import { APIConfig } from "./APIUtils";
 
-/*
-export async function searchBook(query: string) {
-  return await Get<Book[]>(APIConfig.book.search + query).then(
-    ({ data }) => data
-  );
-}
-*/
-
-export async function searchBook(query: string): Promise<Book[]> {
+export async function searchBook(query: string): Promise<IBook[]> {
   const encodedQuery = encodeURIComponent(query);
-  const response = await Get<BookSearchResponse>(
+  const response = await Get<IBookSearchResponse>(
     APIConfig.book.search + encodedQuery
   );
   return response.data.docs;

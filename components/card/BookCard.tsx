@@ -1,8 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import { Book } from "../../screens/authentication/HomeScreen";
+import { IBook } from "../../types/IBook";
 import { Card, Text } from "react-native-paper";
 
-export default function BookCard({ book }: { book: Book }) {
+export default function BookCard({ book }: { book: IBook }) {
   return (
     <View>
       <Card.Content style={styles.bookCard}>
