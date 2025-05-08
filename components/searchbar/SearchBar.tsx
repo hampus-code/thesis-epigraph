@@ -12,7 +12,7 @@ export default function SearchBar({
   placeholder: string;
 }) {
   return (
-    <View>
+    <View style={styles.container}>
       <Searchbar
         style={styles.searchBar}
         placeholder={placeholder}
@@ -25,7 +25,8 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
   searchBar: {
-    marginTop: 50,
+    marginTop: 150,
     width: 350
-  }
+  },
+  container: {}
 });
