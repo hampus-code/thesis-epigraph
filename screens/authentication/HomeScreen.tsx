@@ -7,7 +7,6 @@ import {
 import SearchBar from "../../components/searchbar/SearchBar";
 import { useState } from "react";
 import BookList from "../../components/list/BookList";
-import CustomTextInput from "../../components/input/CustomTextInput";
 
 export default function HomeScreen() {
   const [inputSearch, setInputSearch] = useState("");
