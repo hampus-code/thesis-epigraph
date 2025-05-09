@@ -3,10 +3,22 @@ import { IBook } from "../../types/IBook";
 import { Card, IconButton, Text } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc
+} from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
-export default function BookCard({ book }: { book: IBook }) {
+export default function BookCard({
+  book,
+  onDelete
+}: {
+  book: IBook;
+  onDelete?: () => void;
+}) {
   const [addedBook, setAddedBook] = useState(false);
   const { user } = useAuth();
   const coverUrl = book.cover_i
@@ -25,11 +37,24 @@ export default function BookCard({ book }: { book: IBook }) {
           title: book.title,
           author: book.author_name,
           key: book.key,
+          cover: book.cover_i,
           addedAt: serverTimestamp()
         });
       } catch (error) {
         if (error instanceof Error) {
           Alert.alert("Error adding book: ", error.message);
+        }
+      }
+    }
+    if (!isBookMarked && user) {
+      try {
+        const safeKey = book.key.replace(/\//g, "_");
+        const bookRef = doc(db, "users", user.uid, "books", safeKey);
+        await deleteDoc(bookRef);
+        onDelete?.();
+      } catch (error) {
+        if (error instanceof Error) {
+          Alert.alert("Error deleting book: ", error.message);
         }
       }
     }
