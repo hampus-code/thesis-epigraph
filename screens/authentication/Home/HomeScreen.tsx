@@ -2,7 +2,8 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from "react-native";
 import SearchBar from "../../../components/searchbar/SearchBar";
 import { useState } from "react";
@@ -13,22 +14,28 @@ export default function HomeScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <SearchBar
-          value={inputSearch}
-          onChangeText={setInputSearch}
-          placeholder="Search books ..."
-        />
-        <BookList query={inputSearch} />
-      </View>
+      <KeyboardAvoidingView style={styles.keyboardWrapper} behavior="height">
+        <View style={styles.container}>
+          <SearchBar
+            value={inputSearch}
+            onChangeText={setInputSearch}
+            placeholder="Search books ..."
+          />
+          <BookList query={inputSearch} />
+        </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboardWrapper: {
+    flex: 1
+  },
   container: {
     flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "center"
+    paddingBottom: 103
   }
 });
