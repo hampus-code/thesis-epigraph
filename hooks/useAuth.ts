@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  User
 } from "firebase/auth";
 import { auth, db } from "../firebaseConfig"; // Adjust path if needed
 import { RootStackParamList } from "../navigation/navigation";
