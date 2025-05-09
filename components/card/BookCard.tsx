@@ -1,8 +1,10 @@
 import { View, StyleSheet, Image } from "react-native";
 import { IBook } from "../../types/IBook";
-import { Card, Text } from "react-native-paper";
+import { Card, IconButton, Text } from "react-native-paper";
+import { useState } from "react";
 
 export default function BookCard({ book }: { book: IBook }) {
+  const [addedBook, setAddedBook] = useState(false);
   const coverUrl = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
     : undefined;
@@ -12,7 +14,25 @@ export default function BookCard({ book }: { book: IBook }) {
       <Card.Content style={styles.bookCard}>
         <View style={styles.row}>
           {coverUrl && (
-            <Image style={styles.bookCover} source={{ uri: coverUrl }} />
+            <View style={styles.coverContainer}>
+              <Image
+                style={styles.bookCover}
+                source={{ uri: coverUrl }}
+                resizeMode="cover"
+              />
+              <IconButton
+                style={styles.bookmarkIconOverlay}
+                icon={"bookmark"}
+                size={60}
+              />
+              <IconButton
+                style={styles.iconOverlay}
+                icon={addedBook ? "check" : "plus"}
+                onPress={() => setAddedBook(!addedBook)}
+                size={30}
+                iconColor="white"
+              />
+            </View>
           )}
           <View style={styles.bookInfo}>
             <Text variant="titleMedium">{book.title}</Text>
@@ -45,5 +65,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     marginLeft: 20
+  },
+  coverContainer: {
+    position: "relative"
+  },
+  bookmarkIconOverlay: {
+    position: "absolute",
+    top: -21,
+    right: -26.5,
+    opacity: 0.8
+  },
+  iconOverlay: {
+    position: "absolute",
+    top: -11,
+    right: -12
   }
 });
