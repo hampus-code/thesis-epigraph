@@ -1,5 +1,5 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import {
   createUserWithEmailAndPassword,
@@ -7,13 +7,23 @@ import {
   onAuthStateChanged,
   User
 } from "firebase/auth";
-import { auth, db } from "../firebaseConfig"; // Adjust path if needed
+import { auth, db } from "../firebaseConfig";
 import { RootStackParamList } from "../navigation/navigation";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 export function useAuth() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const register = (
     email: string,
@@ -71,6 +81,7 @@ export function useAuth() {
   return {
     register,
     login,
-    loading
+    loading,
+    user
   };
 }
