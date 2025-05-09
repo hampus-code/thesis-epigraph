@@ -1,13 +1,55 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Alert } from "react-native";
 import { IBook } from "../../types/IBook";
 import { Card, IconButton, Text } from "react-native-paper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 export default function BookCard({ book }: { book: IBook }) {
   const [addedBook, setAddedBook] = useState(false);
+  const { user } = useAuth();
   const coverUrl = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
     : undefined;
+
+  async function handleBookInBooklist() {
+    const isBookMarked = !addedBook;
+    setAddedBook(isBookMarked);
+
+    if (isBookMarked && user) {
+      try {
+        const safeKey = book.key.replace(/\//g, "_");
+        const bookRef = doc(db, "users", user.uid, "books", safeKey);
+        await setDoc(bookRef, {
+          title: book.title,
+          author: book.author_name,
+          key: book.key,
+          addedAt: serverTimestamp()
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          Alert.alert("Error adding book: ", error.message);
+        }
+      }
+    }
+  }
+
+  async function checkIfBookIsAdded() {
+    if (user) {
+      const safeKey = book.key.replace(/\//g, "_");
+      const bookRef = doc(db, "users", user.uid, "books", safeKey);
+      const docSnap = await getDoc(bookRef);
+
+      if (docSnap.exists()) {
+        setAddedBook(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkIfBookIsAdded();
+  }, [user, book.key]);
 
   return (
     <View>
@@ -28,7 +70,7 @@ export default function BookCard({ book }: { book: IBook }) {
               <IconButton
                 style={styles.iconOverlay}
                 icon={addedBook ? "check" : "plus"}
-                onPress={() => setAddedBook(!addedBook)}
+                onPress={handleBookInBooklist}
                 size={30}
                 iconColor="white"
               />
