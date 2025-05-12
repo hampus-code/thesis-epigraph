@@ -25,7 +25,7 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
   searchBar: {
-    marginTop: 150,
+    marginTop: 50,
     width: 350
   },
   container: {}
