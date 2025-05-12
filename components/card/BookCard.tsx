@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Alert } from "react-native";
+import { View, StyleSheet, Image, Alert, TouchableOpacity } from "react-native";
 import { IBook } from "../../types/IBook";
 import { Card, IconButton, Text } from "react-native-paper";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import {
   setDoc
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import BookModal from "../modal/BookModal";
 
 export default function BookCard({
   book,
@@ -21,6 +22,8 @@ export default function BookCard({
 }) {
   const [addedBook, setAddedBook] = useState(false);
   const { user } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
+
   const coverUrl = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
     : undefined;
@@ -38,11 +41,13 @@ export default function BookCard({
           author: book.author_name,
           key: book.key,
           cover: book.cover_i,
+          description: book.description ?? "No description available.",
           addedAt: serverTimestamp()
         });
       } catch (error) {
         if (error instanceof Error) {
           Alert.alert("Error adding book: ", error.message);
+          console.log("Error adding book: ", error.message);
         }
       }
     }
@@ -78,35 +83,47 @@ export default function BookCard({
 
   return (
     <View>
-      <Card.Content style={styles.bookCard}>
-        <View style={styles.row}>
-          {coverUrl && (
-            <View style={styles.coverContainer}>
-              <Image
-                style={styles.bookCover}
-                source={{ uri: coverUrl }}
-                resizeMode="cover"
-              />
-              <IconButton
-                style={styles.bookmarkIconOverlay}
-                icon={"bookmark"}
-                size={60}
-              />
-              <IconButton
-                style={styles.iconOverlay}
-                icon={addedBook ? "check" : "plus"}
-                onPress={handleBookInBooklist}
-                size={30}
-                iconColor="white"
-              />
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Card.Content style={styles.bookCard}>
+          <View style={styles.row}>
+            {coverUrl && (
+              <View style={styles.coverContainer}>
+                <Image
+                  style={styles.bookCover}
+                  source={{ uri: coverUrl }}
+                  resizeMode="cover"
+                />
+                <IconButton
+                  style={styles.bookmarkIconOverlay}
+                  icon={"bookmark"}
+                  size={60}
+                />
+                <IconButton
+                  style={styles.iconOverlay}
+                  icon={addedBook ? "check" : "plus"}
+                  onPress={handleBookInBooklist}
+                  size={30}
+                  iconColor="white"
+                />
+              </View>
+            )}
+            <View style={styles.bookInfo}>
+              <Text variant="titleMedium">{book.title}</Text>
+              <Text style={{ marginTop: 5 }}>
+                {book.author_name?.join(", ")}
+              </Text>
             </View>
-          )}
-          <View style={styles.bookInfo}>
-            <Text variant="titleMedium">{book.title}</Text>
-            <Text style={{ marginTop: 5 }}>{book.author_name?.join(", ")}</Text>
           </View>
-        </View>
-      </Card.Content>
+        </Card.Content>
+      </TouchableOpacity>
+
+      <BookModal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        book={book}
+        addedBook={addedBook}
+        onPress={handleBookInBooklist}
+      />
     </View>
   );
 }

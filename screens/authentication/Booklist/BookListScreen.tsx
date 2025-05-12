@@ -24,7 +24,8 @@ export default function BookListScreen() {
           title: data.title,
           author_name: data.author,
           key: data.key,
-          cover_i: data.cover || undefined
+          cover_i: data.cover || undefined,
+          description: data.description
         });
       });
 
