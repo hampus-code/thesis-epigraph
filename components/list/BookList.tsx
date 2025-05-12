@@ -20,31 +20,41 @@ export default function BookList({ query }: { query: string }) {
     }
   }, [books, query]);
   return (
-    <View>
+    <View style={styles.wrapper}>
       {isLoading ? (
         <ActivityIndicator
           style={styles.activityIndicator}
           animating={true}
           size={"large"}
         />
-      ) : (
+      ) : books && books.length > 0 ? (
         <FlatList
           contentContainerStyle={styles.listContent}
           data={books}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => <BookCard book={item} />}
         />
+      ) : (
+        <Text style={styles.noResultsText}>No results found for "{query}"</Text>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    paddingTop: 50
+  },
   listContent: {
-    alignItems: "center",
-    marginTop: 50
+    alignItems: "center"
   },
   activityIndicator: {
     marginTop: 20
+  },
+  noResultsText: {
+    marginTop: 50,
+    textAlign: "center",
+    fontSize: 16,
+    color: "#666"
   }
 });
