@@ -97,6 +97,7 @@ export default function BookCard({
                   style={styles.bookmarkIconOverlay}
                   icon={"bookmark"}
                   size={60}
+                  iconColor={addedBook ? "#F4AB3C" : "#000000B3"}
                 />
                 <IconButton
                   style={styles.iconOverlay}
@@ -156,8 +157,7 @@ const styles = StyleSheet.create({
   bookmarkIconOverlay: {
     position: "absolute",
     top: -21,
-    right: -26.5,
-    opacity: 0.8
+    right: -26.5
   },
   iconOverlay: {
     position: "absolute",
