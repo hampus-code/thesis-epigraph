@@ -8,7 +8,7 @@ import BottomNavigationBar from "./bottomNavigationBar";
 import RegisterScreen from "../screens/unauthentication/Register/RegisterScreen";
 import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
 import SearchScreen from "../screens/authentication/Search/SearchScreen";
-import SettingsScreen from "../screens/authentication/Settings/SettingsScreen";
+import AccountScreen from "../screens/authentication/Account/AccountScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -16,7 +16,7 @@ export type RootStackParamList = {
   Register: undefined;
   BookList: undefined;
   Search: undefined;
-  Settings: undefined;
+  Account: undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -53,8 +53,8 @@ export default function RootStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Account"
+        component={AccountScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
