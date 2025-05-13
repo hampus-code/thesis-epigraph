@@ -5,7 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  User
+  User,
+  signOut
 } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
 import { RootStackParamList } from "../navigation/navigation";
@@ -78,10 +79,23 @@ export function useAuth() {
       .finally(() => setLoading(false));
   };
 
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert("Sign Out Failed", errorMessage);
+      });
+  };
+
   return {
     register,
     login,
     loading,
-    user
+    user,
+    signOutUser
   };
 }
