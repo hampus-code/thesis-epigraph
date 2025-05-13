@@ -13,6 +13,8 @@ export default function AccountScreen() {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  const { signOutUser } = useAuth();
+
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -62,7 +64,11 @@ export default function AccountScreen() {
         </View>
       </Surface>
       <View style={styles.buttonContainer}>
-        <Button style={styles.signOutButton} mode="outlined">
+        <Button
+          style={styles.signOutButton}
+          mode="outlined"
+          onPress={() => signOutUser()}
+        >
           <Text>Sign out</Text>
         </Button>
       </View>
