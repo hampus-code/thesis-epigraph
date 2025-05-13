@@ -34,9 +34,9 @@ export default function BookList({ query }: { query: string }) {
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => <BookCard book={item} />}
         />
-      ) : (
+      ) : query.trim().length > 0 ? (
         <Text style={styles.noResultsText}>No results found for "{query}"</Text>
-      )}
+      ) : null}
     </View>
   );
 }
