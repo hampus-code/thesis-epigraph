@@ -3,7 +3,7 @@ import { BottomNavigation } from "react-native-paper";
 import HomeScreen from "../screens/authentication/Home/HomeScreen";
 import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
 import SearchScreen from "../screens/authentication/Search/SearchScreen";
-import SettingsScreen from "../screens/authentication/Settings/SettingsScreen";
+import AccountScreen from "../screens/authentication/Account/AccountScreen";
 
 export default function BottomNavigationBar() {
   const [index, setIndex] = React.useState(0);
@@ -26,10 +26,10 @@ export default function BottomNavigationBar() {
       focusedIcon: "magnify"
     },
     {
-      key: "settings",
-      title: "Settings",
-      focusedIcon: "cog",
-      unfocusedIcon: "cog-outline"
+      key: "account",
+      title: "Account",
+      focusedIcon: "account-circle",
+      unfocusedIcon: "account-circle-outline"
     }
   ]);
 
@@ -37,7 +37,7 @@ export default function BottomNavigationBar() {
     home: HomeScreen,
     bookList: BookListScreen,
     search: SearchScreen,
-    settings: SettingsScreen
+    account: AccountScreen
   });
 
   return (

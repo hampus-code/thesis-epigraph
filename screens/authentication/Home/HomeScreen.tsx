@@ -67,13 +67,6 @@ export default function HomeScreen() {
             <Text variant="titleLarge" style={styles.largeTitles}>
               Popular Authors
             </Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.authorList}>
-                {popularAuthors.map((authorKey) => (
-                  <AuthorCard key={authorKey} authorKey={authorKey} />
-                ))}
-              </View>
-            </ScrollView>
           </View>
         </View>
       </KeyboardAvoidingView>
