@@ -84,38 +84,40 @@ export default function BookCard({
   return (
     <View>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Card.Content style={styles.bookCard}>
-          <View style={styles.row}>
-            {coverUrl && (
-              <View style={styles.coverContainer}>
-                <Image
-                  style={styles.bookCover}
-                  source={{ uri: coverUrl }}
-                  resizeMode="cover"
-                />
-                <IconButton
-                  style={styles.bookmarkIconOverlay}
-                  icon={"bookmark"}
-                  size={60}
-                  iconColor={addedBook ? "#F4AB3C" : "#000000B3"}
-                />
-                <IconButton
-                  style={styles.iconOverlay}
-                  icon={addedBook ? "check" : "plus"}
-                  onPress={handleBookInBooklist}
-                  size={30}
-                  iconColor="white"
-                />
+        <View style={{ overflow: "hidden" }}>
+          <Card.Content style={styles.bookCard}>
+            <View style={styles.row}>
+              {coverUrl && (
+                <View style={styles.coverContainer}>
+                  <Image
+                    style={styles.bookCover}
+                    source={{ uri: coverUrl }}
+                    resizeMode="cover"
+                  />
+                  <IconButton
+                    style={styles.bookmarkIconOverlay}
+                    icon={"bookmark"}
+                    size={60}
+                    iconColor={addedBook ? "#F4AB3C" : "#000000B3"}
+                  />
+                  <IconButton
+                    style={styles.iconOverlay}
+                    icon={addedBook ? "check" : "plus"}
+                    onPress={handleBookInBooklist}
+                    size={30}
+                    iconColor="white"
+                  />
+                </View>
+              )}
+              <View style={styles.bookInfo}>
+                <Text variant="titleMedium">{book.title}</Text>
+                <Text style={{ marginTop: 5 }}>
+                  {book.author_name?.join(", ")}
+                </Text>
               </View>
-            )}
-            <View style={styles.bookInfo}>
-              <Text variant="titleMedium">{book.title}</Text>
-              <Text style={{ marginTop: 5 }}>
-                {book.author_name?.join(", ")}
-              </Text>
             </View>
-          </View>
-        </Card.Content>
+          </Card.Content>
+        </View>
       </TouchableOpacity>
 
       <BookModal
@@ -131,16 +133,18 @@ export default function BookCard({
 
 const styles = StyleSheet.create({
   bookCard: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 30,
+    borderRadius: 30,
+    padding: 10,
     marginBottom: 10,
-    width: 350
+    width: 350,
+    backgroundColor: "#F8CA87",
+    elevation: 5
   },
   bookCover: {
     width: 100,
     height: 150,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    borderRadius: 10
   },
   row: {
     flexDirection: "row",
@@ -149,19 +153,20 @@ const styles = StyleSheet.create({
   bookInfo: {
     flex: 1,
     justifyContent: "flex-start",
-    marginLeft: 20
+    marginLeft: 20,
+    marginTop: 10
   },
   coverContainer: {
     position: "relative"
   },
   bookmarkIconOverlay: {
     position: "absolute",
-    top: -21,
+    top: -22,
     right: -26.5
   },
   iconOverlay: {
     position: "absolute",
-    top: -11,
+    top: -12,
     right: -12
   }
 });
