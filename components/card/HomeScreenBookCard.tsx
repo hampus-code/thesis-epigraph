@@ -22,7 +22,7 @@ export default function HomeScreenBookCard() {
       key: "/works/OL67890W",
       title: "To Kill a Mockingbird",
       author_name: ["Harper Lee"],
-      cover_i: 345678,
+      cover_i: 12606502,
       description: "A novel about racial injustice in the Deep South."
     },
     {
@@ -37,13 +37,14 @@ export default function HomeScreenBookCard() {
       key: "/works/OL82563W",
       title: "Harry Potter and the Philosopher's Stone",
       author_name: ["J.K. Rowling"],
-      cover_i: 345678,
+      cover_i: 10521270,
       description:
         "The first book in the Harry Potter series, introducing the young wizard Harry Potter as he discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry."
     }
   ];
   return (
     <ScrollView
+      horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.bookList}
     >
@@ -94,6 +95,6 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   cardText: {
-    marginTop: 10
+    marginTop: 5
   }
 });

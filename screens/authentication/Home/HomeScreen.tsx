@@ -4,7 +4,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  SafeAreaView
 } from "react-native";
 import SearchBar from "../../../components/searchbar/SearchBar";
 import { useState } from "react";
@@ -15,8 +16,6 @@ import AuthorCard from "../../../components/card/AuthorCard";
 import { Text } from "react-native-paper";
 
 export default function HomeScreen() {
-  const [inputSearch, setInputSearch] = useState("");
-
   const popularAuthors = [
     "/authors/OL23919A",
     "/authors/OL26320A",
@@ -49,43 +48,39 @@ export default function HomeScreen() {
   ];
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={styles.keyboardWrapper} behavior="height">
-        <View style={styles.container}>
-          <View>
-            <Text>Welcome, user</Text>
-          </View>
-          <View>
-            <Text variant="titleLarge" style={styles.largeTitles}>
-              Popular Books
-            </Text>
-            <View style={styles.bookList}>
-              <HomeScreenBookCard />
-            </View>
-          </View>
-          <View>
-            <Text variant="titleLarge" style={styles.largeTitles}>
-              Popular Authors
-            </Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.authorList}>
-                {popularAuthors.map((authorKey) => (
-                  <AuthorCard key={authorKey} authorKey={authorKey} />
-                ))}
-              </View>
-            </ScrollView>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <View>
+          <Text>Welcome, user</Text>
+        </View>
+        <View>
+          <Text variant="titleLarge" style={styles.largeTitles}>
+            Popular Books
+          </Text>
+          <View style={styles.bookList}>
+            <HomeScreenBookCard />
           </View>
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        <View>
+          <Text variant="titleLarge" style={styles.largeTitles}>
+            Popular Authors
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.authorList}>
+              {popularAuthors.map((authorKey) => (
+                <AuthorCard key={authorKey} authorKey={authorKey} />
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  keyboardWrapper: {
-    flex: 1
-  },
   container: {
+    flex: 1,
     paddingTop: 100
   },
   bookList: {
@@ -93,7 +88,6 @@ const styles = StyleSheet.create({
   },
   authorList: {
     flexDirection: "row",
-    flexWrap: "wrap",
     justifyContent: "center",
     paddingHorizontal: 10
   },

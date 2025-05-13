@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 50,
     borderRadius: 20,
-    margin: 10
+    margin: 30
   },
   accountColumn: {
     alignItems: "center",
     borderRadius: 20,
-    margin: 10,
+    marginHorizontal: 30,
     flex: 1
   },
   columns: {
