@@ -24,10 +24,13 @@ const KNOWN_GENRES = [
   "Juvenile fiction"
 ];
 
-export async function searchBook(query: string): Promise<IBook[]> {
+export async function searchBook(
+  query: string,
+  page: number = 1
+): Promise<IBook[]> {
   const encodedQuery = encodeURIComponent(query);
   const response = await Get<IBookSearchResponse>(
-    APIConfig.book.search + encodedQuery
+    `${APIConfig.book.search + encodedQuery}&page=${page}`
   );
   return response.data.docs;
 }
