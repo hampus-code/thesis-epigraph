@@ -1,21 +1,12 @@
-import {
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  SafeAreaView
-} from "react-native";
-import SearchBar from "../../../components/searchbar/SearchBar";
-import { useState } from "react";
-import BookList from "../../../components/list/BookList";
-import { IBook } from "../../../types/IBook";
+import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import HomeScreenBookCard from "../../../components/card/HomeScreenBookCard";
 import AuthorCard from "../../../components/card/AuthorCard";
 import { Text } from "react-native-paper";
+import { useAuth } from "../../../hooks/useAuth";
 
 export default function HomeScreen() {
+  const { user } = useAuth();
+
   const popularAuthors = [
     "/authors/OL23919A",
     "/authors/OL26320A",
@@ -23,35 +14,16 @@ export default function HomeScreen() {
     "/authors/OL24638A"
   ];
 
-  const popularBooks: IBook[] = [
-    {
-      key: "/works/OL45883W",
-      title: "The Great Gatsby",
-      author_name: ["F. Scott Fitzgerald"],
-      cover_i: 123456,
-      description: "A novel about the American dream."
-    },
-    {
-      key: "/works/OL12345W",
-      title: "1984",
-      author_name: ["George Orwell"],
-      cover_i: 234567,
-      description: "A dystopian novel set in a totalitarian society."
-    },
-    {
-      key: "/works/OL67890W",
-      title: "To Kill a Mockingbird",
-      author_name: ["Harper Lee"],
-      cover_i: 345678,
-      description: "A novel about racial injustice in the Deep South."
-    }
-  ];
-
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <View>
-          <Text>Welcome, user</Text>
+        <View style={styles.userText}>
+          <Text>
+            <Text variant="headlineLarge">Welcome, </Text>
+            <Text variant="titleLarge" style={{ fontWeight: "bold" }}>
+              {user?.displayName || user?.email}!
+            </Text>
+          </Text>
         </View>
         <View>
           <Text variant="titleLarge" style={styles.largeTitles}>
@@ -81,7 +53,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 100
+    paddingTop: 80
   },
   bookList: {
     marginBottom: 20
@@ -96,5 +68,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     alignSelf: "flex-start",
     marginLeft: 15
+  },
+  userText: {
+    marginLeft: 10,
+    marginBottom: 10
   }
 });

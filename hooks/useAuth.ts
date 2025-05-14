@@ -6,7 +6,9 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   User,
-  signOut
+  signOut,
+  updateProfile,
+  reload
 } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
 import { RootStackParamList } from "../navigation/navigation";
@@ -29,7 +31,8 @@ export function useAuth() {
   const register = (
     email: string,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    username: string
   ) => {
     if (password !== confirmPassword) {
       Alert.alert("Passwords do not match");
@@ -41,10 +44,21 @@ export function useAuth() {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
+
+        await updateProfile(user, {
+          displayName: username
+        });
+
+        await reload(user);
+
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
+          username: username,
           createdAt: serverTimestamp()
         });
+
+        setUser(auth.currentUser);
+
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -63,8 +77,11 @@ export function useAuth() {
     setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
+
+        await reload(user);
+
         navigation.navigate("Home");
       })
       .catch((error) => {
