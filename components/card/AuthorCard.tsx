@@ -5,8 +5,9 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
-  ScrollView
+  TouchableOpacity
 } from "react-native";
+import AuthorModal from "../modal/AuthorModal";
 
 interface Author {
   key: string;
@@ -16,6 +17,7 @@ interface Author {
 export default function AuthorCard({ authorKey }: { authorKey: string }) {
   const [author, setAuthor] = useState<Author | null>(null);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const fetchAuthor = async () => {
     try {
@@ -23,10 +25,17 @@ export default function AuthorCard({ authorKey }: { authorKey: string }) {
       const response = await fetch(
         `https://openlibrary.org/authors/${id}.json`
       );
+
+      const contentType = response.headers.get("content-type");
+      if (!response.ok || !contentType?.includes("application/json")) {
+        throw new Error(`Unexpected response: ${response.status}`);
+      }
+
       const data = await response.json();
       setAuthor({ key: id, name: data.name });
     } catch (error) {
       console.error("Error fetching author:", error);
+      setAuthor(null);
     } finally {
       setLoading(false);
     }
@@ -43,10 +52,17 @@ export default function AuthorCard({ authorKey }: { authorKey: string }) {
   const imageUrl = `https://covers.openlibrary.org/a/olid/${author.key}-M.jpg`;
 
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: imageUrl }} style={styles.authorImage} />
-      <Text style={styles.authorName}>{author.name}</Text>
-    </View>
+    <TouchableOpacity onPress={() => setModalVisible(true)}>
+      <View style={styles.container}>
+        <Image source={{ uri: imageUrl }} style={styles.authorImage} />
+        <Text style={styles.authorName}>{author.name}</Text>
+      </View>
+      <AuthorModal
+        authorKey={authorKey}
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
+    </TouchableOpacity>
   );
 }
 
