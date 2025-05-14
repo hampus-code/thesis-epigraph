@@ -6,13 +6,16 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView
 } from "react-native";
 import { RootStackParamList } from "../../../navigation/navigation";
 import { Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
 import { useAuth } from "../../../hooks/useAuth";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -27,104 +30,107 @@ export default function RegisterScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={styles.keyboardWrapper} behavior="height">
-        <View style={styles.wrapper}>
-          <Image
-            style={styles.image}
-            source={require("../../../assets/epigraph-logo.png")}
-          />
-          <View style={styles.container}>
-            <Text style={styles.titleText}>Register</Text>
-            <CustomTextInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Email"
-              leftIcon={<TextInput.Icon icon={"email"} />}
-              secureOrNot={false}
-            />
-            <CustomTextInput
-              value={username}
-              onChangeText={setUsername}
-              placeholder="Username"
-              leftIcon={<TextInput.Icon icon={"account"} />}
-              secureOrNot={false}
-            />
-            <CustomTextInput
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Password"
-              secureOrNot={!showPassword}
-              leftIcon={<TextInput.Icon icon={"lock"} />}
-              rightIcon={
-                <TextInput.Icon
-                  icon={showPassword ? "eye" : "eye-off"}
-                  onPress={() => setShowPassword(!showPassword)}
-                />
-              }
-            />
-            <CustomTextInput
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholder="Confirm Password"
-              secureOrNot={!showConfirmPassword}
-              leftIcon={<TextInput.Icon icon={"lock"} />}
-              rightIcon={
-                <TextInput.Icon
-                  icon={showConfirmPassword ? "eye" : "eye-off"}
-                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                />
-              }
-            />
-            <Text
-              style={styles.text}
-              onPress={() => navigation.navigate("Login")}
-            >
-              Already have an account?
-            </Text>
-            <FormButton
-              label="Register"
-              onPress={() =>
-                register(email, password, confirmPassword, username)
-              }
+      <SafeAreaView style={styles.wrapper}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.keyboardWrapper}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+        >
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.logo}
+              source={require("../../../assets/epigraph-logo.png")}
             />
           </View>
-        </View>
-      </KeyboardAvoidingView>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.container}>
+              <CustomTextInput
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Email"
+                leftIcon={<TextInput.Icon icon={"account"} />}
+                secureOrNot={false}
+              />
+              <CustomTextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Password"
+                leftIcon={<TextInput.Icon icon={"lock"} />}
+                rightIcon={
+                  <TextInput.Icon
+                    icon={showPassword ? "eye" : "eye-off"}
+                    onPress={() => setShowPassword(!showPassword)}
+                  />
+                }
+                secureOrNot={!showPassword}
+              />
+              <CustomTextInput
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                placeholder="Confirm Password"
+                secureOrNot={!showConfirmPassword}
+                leftIcon={<TextInput.Icon icon={"lock"} />}
+                rightIcon={
+                  <TextInput.Icon
+                    icon={showConfirmPassword ? "eye" : "eye-off"}
+                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                  />
+                }
+              />
+              <Text
+                style={styles.text}
+                onPress={() => navigation.navigate("Login")}
+              >
+                Already have an account?
+              </Text>
+              <FormButton
+                label="Register"
+                onPress={() =>
+                  register(email, password, confirmPassword, username)
+                }
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
   keyboardWrapper: {
     flex: 1
   },
-  wrapper: {
-    flex: 1,
-    backgroundColor: "#fff",
+  scrollContainer: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 100
+    paddingBottom: 150
   },
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
-    marginTop: 75
+    marginTop: 20
   },
   titleText: {
     fontSize: 30
-  },
-  textInput: {
-    width: 300,
-    borderRadius: 20,
-    marginTop: 10
   },
   text: {
     textDecorationLine: "underline",
     marginTop: 10
   },
-  image: {
+  logo: {
     width: 150,
     height: 150
+  },
+  logoContainer: {
+    alignItems: "center",
+    marginTop: 50
   }
 });
