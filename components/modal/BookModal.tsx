@@ -59,6 +59,7 @@ export default function BookModal({
                 style={styles.bookmarkIconOverlay}
                 icon={"bookmark"}
                 size={60}
+                iconColor={addedBook ? "#F4AB3C" : "#000000B3"}
               />
               <IconButton
                 style={styles.iconOverlay}
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     height: 400,
-    width: 380,
+    width: "92%",
     justifyContent: "flex-start",
     alignItems: "center",
     margin: 15
@@ -102,7 +103,8 @@ const styles = StyleSheet.create({
   bookCover: {
     width: 100,
     height: 150,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    borderRadius: 10
   },
   modalContent: {
     flexDirection: "row",
@@ -120,9 +122,8 @@ const styles = StyleSheet.create({
   },
   bookmarkIconOverlay: {
     position: "absolute",
-    top: -21,
-    right: -26.5,
-    opacity: 0.8
+    top: -21.6,
+    right: -26.5
   },
   iconOverlay: {
     position: "absolute",
