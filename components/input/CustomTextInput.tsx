@@ -19,6 +19,7 @@ export default function CustomTextInput({
   return (
     <View>
       <TextInput
+        autoCapitalize="none"
         style={styles.textInput}
         value={value}
         onChangeText={onChangeText}
