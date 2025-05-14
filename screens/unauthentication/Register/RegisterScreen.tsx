@@ -1,6 +1,13 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView
+} from "react-native";
 import { RootStackParamList } from "../../../navigation/navigation";
 import { Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
@@ -18,59 +25,69 @@ export default function RegisterScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
-    <View style={styles.wrapper}>
-      <Image
-        style={styles.image}
-        source={require("../../../assets/epigraph-logo.png")}
-      />
-      <View style={styles.container}>
-        <Text style={styles.titleText}>Register</Text>
-        <CustomTextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email"
-          leftIcon={<TextInput.Icon icon={"account"} />}
-          secureOrNot={false}
-        />
-        <CustomTextInput
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Password"
-          secureOrNot={!showPassword}
-          leftIcon={<TextInput.Icon icon={"lock"} />}
-          rightIcon={
-            <TextInput.Icon
-              icon={showPassword ? "eye" : "eye-off"}
-              onPress={() => setShowPassword(!showPassword)}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={styles.keyboardWrapper} behavior="height">
+        <View style={styles.wrapper}>
+          <Image
+            style={styles.image}
+            source={require("../../../assets/epigraph-logo.png")}
+          />
+          <View style={styles.container}>
+            <Text style={styles.titleText}>Register</Text>
+            <CustomTextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email"
+              leftIcon={<TextInput.Icon icon={"account"} />}
+              secureOrNot={false}
             />
-          }
-        />
-        <CustomTextInput
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholder="Confirm Password"
-          secureOrNot={!showConfirmPassword}
-          leftIcon={<TextInput.Icon icon={"lock"} />}
-          rightIcon={
-            <TextInput.Icon
-              icon={showConfirmPassword ? "eye" : "eye-off"}
-              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            <CustomTextInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Password"
+              secureOrNot={!showPassword}
+              leftIcon={<TextInput.Icon icon={"lock"} />}
+              rightIcon={
+                <TextInput.Icon
+                  icon={showPassword ? "eye" : "eye-off"}
+                  onPress={() => setShowPassword(!showPassword)}
+                />
+              }
             />
-          }
-        />
-        <Text style={styles.text} onPress={() => navigation.navigate("Login")}>
-          Already have an account?
-        </Text>
-        <FormButton
-          label="Register"
-          onPress={() => register(email, password, confirmPassword)}
-        />
-      </View>
-    </View>
+            <CustomTextInput
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              placeholder="Confirm Password"
+              secureOrNot={!showConfirmPassword}
+              leftIcon={<TextInput.Icon icon={"lock"} />}
+              rightIcon={
+                <TextInput.Icon
+                  icon={showConfirmPassword ? "eye" : "eye-off"}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                />
+              }
+            />
+            <Text
+              style={styles.text}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Already have an account?
+            </Text>
+            <FormButton
+              label="Register"
+              onPress={() => register(email, password, confirmPassword)}
+            />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboardWrapper: {
+    flex: 1
+  },
   wrapper: {
     flex: 1,
     backgroundColor: "#fff",
