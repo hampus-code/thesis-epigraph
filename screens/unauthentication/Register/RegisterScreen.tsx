@@ -17,6 +17,7 @@ import { useAuth } from "../../../hooks/useAuth";
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -38,6 +39,13 @@ export default function RegisterScreen() {
               value={email}
               onChangeText={setEmail}
               placeholder="Email"
+              leftIcon={<TextInput.Icon icon={"email"} />}
+              secureOrNot={false}
+            />
+            <CustomTextInput
+              value={username}
+              onChangeText={setUsername}
+              placeholder="Username"
               leftIcon={<TextInput.Icon icon={"account"} />}
               secureOrNot={false}
             />
@@ -75,7 +83,9 @@ export default function RegisterScreen() {
             </Text>
             <FormButton
               label="Register"
-              onPress={() => register(email, password, confirmPassword)}
+              onPress={() =>
+                register(email, password, confirmPassword, username)
+              }
             />
           </View>
         </View>
