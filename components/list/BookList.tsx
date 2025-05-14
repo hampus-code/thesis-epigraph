@@ -1,24 +1,35 @@
 import { View, StyleSheet, Text, FlatList } from "react-native";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { searchBook } from "../../api/APIMethods";
-import { useEffect } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import BookCard from "../../components/card/BookCard";
 
 export default function BookList({ query }: { query: string }) {
-  const { data: books, isLoading } = useQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError
+  } = useInfiniteQuery({
     queryKey: ["books", query],
-    queryFn: () => searchBook(query),
+    queryFn: ({ pageParam = 1 }) => searchBook(query, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 100 ? allPages.length + 1 : undefined;
+    },
     enabled: query.trim().length > 0
   });
 
-  useEffect(() => {
-    if (books && books.length > 0) {
-      console.log("First book title:", books[0].title);
-    } else {
-      console.log("No books returned or books is undefined");
+  const books = data?.pages.flat() ?? [];
+
+  const loadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [books, query]);
+  };
+
   return (
     <View style={styles.wrapper}>
       {isLoading ? (
@@ -27,12 +38,19 @@ export default function BookList({ query }: { query: string }) {
           animating={true}
           size={"large"}
         />
-      ) : books && books.length > 0 ? (
+      ) : books.length > 0 ? (
         <FlatList
           contentContainerStyle={styles.listContent}
           data={books}
           keyExtractor={(item) => item.key}
           renderItem={({ item }) => <BookCard book={item} />}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <ActivityIndicator style={{ marginVertical: 20 }} />
+            ) : null
+          }
         />
       ) : query.trim().length > 0 ? (
         <Text style={styles.noResultsText}>No results found for "{query}"</Text>
