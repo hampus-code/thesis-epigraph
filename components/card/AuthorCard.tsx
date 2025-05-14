@@ -35,7 +35,7 @@ export default function AuthorCard({ authorKey }: { authorKey: string }) {
       setAuthor({ key: id, name: data.name });
     } catch (error) {
       console.error("Error fetching author:", error);
-      setAuthor(null); // Fallback
+      setAuthor(null);
     } finally {
       setLoading(false);
     }
