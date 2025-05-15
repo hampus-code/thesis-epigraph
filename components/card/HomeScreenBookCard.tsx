@@ -8,14 +8,14 @@ export default function HomeScreenBookCard() {
       key: "/works/OL45883W",
       title: "The Great Gatsby",
       author_name: ["F. Scott Fitzgerald"],
-      cover_i: 123456,
+      cover_i: 10590366,
       description: "A novel about the American dream."
     },
     {
       key: "/works/OL12345W",
       title: "1984",
       author_name: ["George Orwell"],
-      cover_i: 234567,
+      cover_i: 9267242,
       description: "A dystopian novel set in a totalitarian society."
     },
     {
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   bookList: {
     paddingHorizontal: 10,
     gap: 20,
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingBottom: 5
   },
   card: {
     width: 100,
