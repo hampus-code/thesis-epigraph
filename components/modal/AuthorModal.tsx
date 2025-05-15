@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Alert } from "react-native";
 import { Modal, Portal, Text } from "react-native-paper";
-
-interface AuthorWork {
-  key: string;
-  title: string;
-}
+import { AuthorWork } from "../../types/IAuthorWork";
 
 export default function AuthorModal({
   authorKey,
@@ -19,7 +15,7 @@ export default function AuthorModal({
   const [works, setWorks] = useState<AuthorWork[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchAuthorWorks = async (retries = 3) => {
+  async function fetchAuthorWorks(retries = 3) {
     try {
       const id = authorKey.replace("/authors/", "");
       const response = await fetch(
@@ -35,16 +31,17 @@ export default function AuthorModal({
       setWorks(data.entries || []);
     } catch (error) {
       if (retries > 0) {
-        console.log(`Retrying fetch... ${retries} attempts left.`);
         setTimeout(() => fetchAuthorWorks(retries - 1), 2000);
       } else {
-        console.error("Error fetching works:", error);
+        if (error instanceof Error) {
+          Alert.alert("Error fetching works: ", error.message);
+        }
         setWorks([]);
       }
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     if (modalVisible) fetchAuthorWorks();

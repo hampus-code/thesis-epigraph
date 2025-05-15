@@ -9,15 +9,7 @@ import RegisterScreen from "../screens/unauthentication/Register/RegisterScreen"
 import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
 import SearchScreen from "../screens/authentication/Search/SearchScreen";
 import AccountScreen from "../screens/authentication/Account/AccountScreen";
-
-export type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-  Register: undefined;
-  BookList: undefined;
-  Search: undefined;
-  Account: undefined;
-};
+import { RootStackParamList } from "../types/navigation.types";
 
 export type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 

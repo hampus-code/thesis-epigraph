@@ -10,12 +10,12 @@ import {
   ScrollView
 } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../navigation/navigation";
 import { Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
 import { useAuth } from "../../../hooks/useAuth";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { RootStackParamList } from "../../../types/navigation.types";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -48,7 +48,7 @@ export default function LoginScreen() {
                 value={email}
                 onChangeText={setEmail}
                 placeholder="Email"
-                leftIcon={<TextInput.Icon icon={"account"} />}
+                leftIcon={<TextInput.Icon icon={"email"} />}
                 secureOrNot={false}
               />
               <CustomTextInput

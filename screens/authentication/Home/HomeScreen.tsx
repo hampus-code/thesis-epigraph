@@ -3,16 +3,10 @@ import HomeScreenBookCard from "../../../components/card/HomeScreenBookCard";
 import AuthorCard from "../../../components/card/AuthorCard";
 import { Text } from "react-native-paper";
 import { useAuth } from "../../../hooks/useAuth";
+import { POPULAR_AUTHORS } from "../../../constants/popularAuthors";
 
 export default function HomeScreen() {
   const { user } = useAuth();
-
-  const popularAuthors = [
-    "/authors/OL23919A",
-    "/authors/OL26320A",
-    "/authors/OL2622837A",
-    "/authors/OL24638A"
-  ];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,7 +33,7 @@ export default function HomeScreen() {
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.authorList}>
-              {popularAuthors.map((authorKey) => (
+              {POPULAR_AUTHORS.map((authorKey) => (
                 <AuthorCard key={authorKey} authorKey={authorKey} />
               ))}
             </View>

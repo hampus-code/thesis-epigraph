@@ -10,17 +10,16 @@ import {
   Platform,
   ScrollView
 } from "react-native";
-import { RootStackParamList } from "../../../navigation/navigation";
 import { Text, TextInput } from "react-native-paper";
 import FormButton from "../../../components/button/FormButton";
 import CustomTextInput from "../../../components/input/CustomTextInput";
 import { useAuth } from "../../../hooks/useAuth";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { RootStackParamList } from "../../../types/navigation.types";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -51,7 +50,7 @@ export default function RegisterScreen() {
                 value={email}
                 onChangeText={setEmail}
                 placeholder="Email"
-                leftIcon={<TextInput.Icon icon={"account"} />}
+                leftIcon={<TextInput.Icon icon={"email"} />}
                 secureOrNot={false}
               />
               <CustomTextInput
@@ -88,9 +87,7 @@ export default function RegisterScreen() {
               </Text>
               <FormButton
                 label="Register"
-                onPress={() =>
-                  register(email, password, confirmPassword, username)
-                }
+                onPress={() => register(email, password, confirmPassword)}
               />
             </View>
           </ScrollView>

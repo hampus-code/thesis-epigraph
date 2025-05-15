@@ -1,34 +1,19 @@
 import { View, StyleSheet, Alert, FlatList } from "react-native";
 import { Text } from "react-native-paper";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebaseConfig";
 import { useEffect, useState } from "react";
 import { IBook } from "../../../types/IBook";
 import { useAuth } from "../../../hooks/useAuth";
 import BookCard from "../../../components/card/BookCard";
+import { fetchBooklist } from "../../../firebase/bookList";
 
 export default function BookListScreen() {
   const [booklist, setBooklist] = useState<IBook[]>([]);
   const { user } = useAuth();
 
-  async function fetchBooklist() {
+  async function loadBooks() {
     try {
       if (!user?.uid) return;
-      const booksRef = collection(db, "users", user.uid, "books");
-      const querySnap = await getDocs(booksRef);
-      const books: IBook[] = [];
-
-      querySnap.forEach((doc) => {
-        const data = doc.data();
-        books.push({
-          title: data.title,
-          author_name: data.author,
-          key: data.key,
-          cover_i: data.cover || undefined,
-          description: data.description
-        });
-      });
-
+      const books = await fetchBooklist(user.uid);
       setBooklist(books);
     } catch (error) {
       if (error instanceof Error) {
@@ -38,9 +23,7 @@ export default function BookListScreen() {
   }
 
   useEffect(() => {
-    if (user) {
-      fetchBooklist();
-    }
+    loadBooks();
   }, [user]);
 
   return (

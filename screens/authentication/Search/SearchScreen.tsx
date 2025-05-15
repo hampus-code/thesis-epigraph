@@ -3,16 +3,11 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
-  ScrollView
+  KeyboardAvoidingView
 } from "react-native";
 import SearchBar from "../../../components/searchbar/SearchBar";
 import { useState } from "react";
 import BookList from "../../../components/list/BookList";
-import { IBook } from "../../../types/IBook";
-import HomeScreenBookCard from "../../../components/card/HomeScreenBookCard";
-import AuthorCard from "../../../components/card/AuthorCard";
-import { Text } from "react-native-paper";
 
 export default function SearchScreen() {
   const [inputSearch, setInputSearch] = useState("");
