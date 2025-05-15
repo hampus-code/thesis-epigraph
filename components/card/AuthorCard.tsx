@@ -8,46 +8,25 @@ import {
   TouchableOpacity
 } from "react-native";
 import AuthorModal from "../modal/AuthorModal";
-
-interface Author {
-  key: string;
-  name: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import { fetchAuthor } from "../../api/APIMethods";
 
 export default function AuthorCard({ authorKey }: { authorKey: string }) {
-  const [author, setAuthor] = useState<Author | null>(null);
-  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const fetchAuthor = async () => {
-    try {
-      const id = authorKey.replace("/authors/", "");
-      const response = await fetch(
-        `https://openlibrary.org/authors/${id}.json`
-      );
+  const {
+    data: author,
+    isLoading,
+    isError
+  } = useQuery({
+    queryKey: ["author", authorKey],
+    queryFn: () => fetchAuthor(authorKey),
+    staleTime: 1000 * 60 * 5,
+    retry: 1
+  });
 
-      const contentType = response.headers.get("content-type");
-      if (!response.ok || !contentType?.includes("application/json")) {
-        throw new Error(`Unexpected response: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setAuthor({ key: id, name: data.name });
-    } catch (error) {
-      console.error("Error fetching author:", error);
-      setAuthor(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAuthor();
-  }, [authorKey]);
-
-  if (loading) return <ActivityIndicator />;
-
-  if (!author) return <Text>Author not found</Text>;
+  if (isLoading) return <ActivityIndicator />;
+  if (isError || !author) return <Text>Author not found</Text>;
 
   const imageUrl = `https://covers.openlibrary.org/a/olid/${author.key}-M.jpg`;
 

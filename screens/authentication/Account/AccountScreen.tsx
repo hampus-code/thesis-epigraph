@@ -4,8 +4,8 @@ import { useAuth } from "../../../hooks/useAuth";
 import * as ImagePicker from "expo-image-picker";
 import { Button, Icon, Text } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../navigation/navigation";
 import { Surface } from "react-native-paper";
+import { RootStackParamList } from "../../../types/navigation.types";
 
 export default function AccountScreen() {
   const { user } = useAuth();

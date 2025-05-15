@@ -1,12 +1,9 @@
+import { Author } from "../types/IAuthor";
 import { IBook } from "../types/IBook";
+import { IBookDetailsResponse } from "../types/IBookDetailsResponse";
 import { IBookSearchResponse } from "../types/IBookSearchResponse";
 import { Get } from "./APIConfig";
 import { APIConfig } from "./APIUtils";
-
-interface IBookDetailsResponse {
-  description?: string | { value: string };
-  subjects?: string[];
-}
 
 const KNOWN_GENRES = [
   "Fantasy fiction",
@@ -54,4 +51,14 @@ export async function fetchBookDetails(workKey: string): Promise<{
   const genres = fetchGenres(data.subjects || []);
 
   return { description, genres };
+}
+
+export async function fetchAuthor(authorKey: string): Promise<Author> {
+  const id = authorKey.replace("/authors/", "");
+  return await Get<{ name: string }>(`/authors/${id}.json`).then(
+    ({ data }) => ({
+      key: id,
+      name: data.name
+    })
+  );
 }

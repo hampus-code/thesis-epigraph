@@ -5,22 +5,16 @@ import { ActivityIndicator } from "react-native-paper";
 import BookCard from "../../components/card/BookCard";
 
 export default function BookList({ query }: { query: string }) {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError
-  } = useInfiniteQuery({
-    queryKey: ["books", query],
-    queryFn: ({ pageParam = 1 }) => searchBook(query, pageParam),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 100 ? allPages.length + 1 : undefined;
-    },
-    enabled: query.trim().length > 0
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery({
+      queryKey: ["books", query],
+      queryFn: ({ pageParam = 1 }) => searchBook(query, pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length === 100 ? allPages.length + 1 : undefined;
+      },
+      enabled: query.trim().length > 0
+    });
 
   const books = data?.pages.flat() ?? [];
 

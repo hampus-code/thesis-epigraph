@@ -45,7 +45,6 @@ export default function BookCard({
       } catch (error) {
         if (error instanceof Error) {
           Alert.alert("Error adding book: ", error.message);
-          console.log("Error adding book: ", error.message);
         }
       }
     }

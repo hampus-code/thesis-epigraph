@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAudioRecorder, RecordingPresets } from "expo-audio";
 import * as FileSystem from "expo-file-system";
 import { LEMONFOX_API_KEY } from "@env";
+import { Alert } from "react-native";
 
 export async function useAudioSearch(
   uri: string,
@@ -14,7 +15,7 @@ export async function useAudioSearch(
 
     const fileInfo = await FileSystem.getInfoAsync(fileUri);
     if (!fileInfo.exists) {
-      console.error("Audio file does not exist at:", fileUri);
+      Alert.alert("Audio file does not exist at:", fileUri);
       return;
     }
 
@@ -41,15 +42,20 @@ export async function useAudioSearch(
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Transcription failed:", errorText);
+      Alert.alert("Transcription failed:", errorText);
       return;
     }
 
     const data = await response.json();
     const cleanedText = data.text.trim().replace(/[.,!?]+$/, "");
     onTranscription(cleanedText);
-  } catch (error) {
-    console.error("Error transcribing audio with Lemonfox.ai API:", error);
+  } catch (error: any) {
+    if (error instanceof Error) {
+      Alert.alert(
+        "Error transcribing audio with Lemonfox.ai API:",
+        error.message
+      );
+    }
   }
 }
 
@@ -67,8 +73,6 @@ export function useAudioRecorderAndTranscribe(
 
         const uri = recorder.uri;
         if (uri) {
-          console.log("Recorder URI:", uri);
-
           await new Promise((res) => setTimeout(res, 1000));
 
           await useAudioSearch(uri, onTranscription);
@@ -79,7 +83,9 @@ export function useAudioRecorderAndTranscribe(
         setIsRecording(true);
       }
     } catch (error) {
-      console.error("Recording error: ", error);
+      if (error instanceof Error) {
+        Alert.alert("Recording error: ", error.message);
+      }
     }
   }
 

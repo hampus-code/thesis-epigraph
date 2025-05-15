@@ -11,8 +11,8 @@ import {
   reload
 } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
-import { RootStackParamList } from "../navigation/navigation";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { RootStackParamList } from "../types/navigation.types";
 
 export function useAuth() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -31,8 +31,7 @@ export function useAuth() {
   const register = (
     email: string,
     password: string,
-    confirmPassword: string,
-    username: string
+    confirmPassword: string
   ) => {
     if (password !== confirmPassword) {
       Alert.alert("Passwords do not match");
@@ -45,15 +44,10 @@ export function useAuth() {
       .then(async (userCredential) => {
         const user = userCredential.user;
 
-        await updateProfile(user, {
-          displayName: username
-        });
-
         await reload(user);
 
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          username: username,
           createdAt: serverTimestamp()
         });
 
