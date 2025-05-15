@@ -21,7 +21,6 @@ export default function BookCard({
   const [modalVisible, setModalVisible] = useState(false);
   const { addBook, removeBook } = useBookStore();
 
-  // Check if the book is in the global store
   const isBookInList = useBookStore((state) =>
     state.booklist.some((b) => b.key === book.key)
   );

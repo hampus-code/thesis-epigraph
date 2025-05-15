@@ -34,21 +34,6 @@ export default function RootStack() {
         component={BottomNavigationBar}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="BookList"
-        component={BookListScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Account"
-        component={AccountScreen}
-        options={{ headerShown: false }}
-      />
     </Stack.Navigator>
   );
 }
