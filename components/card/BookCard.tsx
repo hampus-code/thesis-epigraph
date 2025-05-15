@@ -1,34 +1,35 @@
 import { View, StyleSheet, Image, Alert, TouchableOpacity } from "react-native";
 import { IBook } from "../../types/IBook";
 import { Card, IconButton, Text } from "react-native-paper";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import {
-  deleteDoc,
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc
-} from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import BookModal from "../modal/BookModal";
+import { useBookStore } from "../../store/bookStore";
+import { useState } from "react";
 
 export default function BookCard({
   book,
-  onDelete
+  onDelete,
+  onAdd
 }: {
   book: IBook;
   onDelete?: () => void;
+  onAdd?: () => void;
 }) {
-  const [addedBook, setAddedBook] = useState(false);
   const { user } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
+  const { addBook, removeBook } = useBookStore();
+
+  // Check if the book is in the global store
+  const isBookInList = useBookStore((state) =>
+    state.booklist.some((b) => b.key === book.key)
+  );
 
   const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
 
   async function handleBookInBooklist() {
-    const isBookMarked = !addedBook;
-    setAddedBook(isBookMarked);
+    const isBookMarked = !isBookInList;
 
     if (isBookMarked && user) {
       try {
@@ -42,17 +43,18 @@ export default function BookCard({
           description: book.description ?? "No description available.",
           addedAt: serverTimestamp()
         });
+        addBook(book);
       } catch (error) {
         if (error instanceof Error) {
           Alert.alert("Error adding book: ", error.message);
         }
       }
-    }
-    if (!isBookMarked && user) {
+    } else if (user) {
       try {
         const safeKey = book.key.replace(/\//g, "_");
         const bookRef = doc(db, "users", user.uid, "books", safeKey);
         await deleteDoc(bookRef);
+        removeBook(book.key);
         onDelete?.();
       } catch (error) {
         if (error instanceof Error) {
@@ -61,22 +63,6 @@ export default function BookCard({
       }
     }
   }
-
-  async function checkIfBookIsAdded() {
-    if (user) {
-      const safeKey = book.key.replace(/\//g, "_");
-      const bookRef = doc(db, "users", user.uid, "books", safeKey);
-      const docSnap = await getDoc(bookRef);
-
-      if (docSnap.exists()) {
-        setAddedBook(true);
-      }
-    }
-  }
-
-  useEffect(() => {
-    checkIfBookIsAdded();
-  }, [user, book.key]);
 
   return (
     <View>
@@ -99,11 +85,11 @@ export default function BookCard({
                     style={styles.bookmarkIconOverlay}
                     icon={"bookmark"}
                     size={60}
-                    iconColor={addedBook ? "#F4AB3C" : "#000000B3"}
+                    iconColor={isBookInList ? "#F4AB3C" : "#000000B3"}
                   />
                   <IconButton
                     style={styles.iconOverlay}
-                    icon={addedBook ? "check" : "plus"}
+                    icon={isBookInList ? "check" : "plus"}
                     onPress={handleBookInBooklist}
                     size={30}
                     iconColor="white"
@@ -125,7 +111,7 @@ export default function BookCard({
         modalVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         book={book}
-        addedBook={addedBook}
+        addedBook={isBookInList}
         onPress={handleBookInBooklist}
       />
     </View>

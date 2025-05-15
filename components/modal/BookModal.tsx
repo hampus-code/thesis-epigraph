@@ -19,6 +19,7 @@ export default function BookModal({
 }) {
   const [description, setDescription] = useState<string | null>(null);
   const [genres, setGenres] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const coverUrl = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
@@ -26,12 +27,15 @@ export default function BookModal({
 
   async function fetchData() {
     if (modalVisible && book.key) {
+      setLoading(true);
       try {
         const { description, genres } = await fetchBookDetails(book.key);
         setDescription(description);
         setGenres(genres);
       } catch (err) {
         setDescription("Failed to load description.");
+      } finally {
+        setLoading(false);
       }
     }
   }
@@ -82,7 +86,13 @@ export default function BookModal({
           <Text style={styles.descriptionTitle} variant="titleSmall">
             Description
           </Text>
-          <Text>{description}</Text>
+          {loading ? (
+            <Text>Loading...</Text>
+          ) : description && description.trim().length > 0 ? (
+            <Text>{description}</Text>
+          ) : (
+            <Text>No description available.</Text>
+          )}
         </ScrollView>
       </Modal>
     </Portal>
