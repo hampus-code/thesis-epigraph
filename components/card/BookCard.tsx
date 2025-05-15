@@ -24,9 +24,7 @@ export default function BookCard({
   const { user } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const coverUrl = book.cover_i
-    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-    : undefined;
+  const coverUrl = `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
 
   async function handleBookInBooklist() {
     const isBookMarked = !addedBook;
@@ -91,7 +89,11 @@ export default function BookCard({
                 <View style={styles.coverContainer}>
                   <Image
                     style={styles.bookCover}
-                    source={{ uri: coverUrl }}
+                    source={
+                      book.cover_i
+                        ? { uri: coverUrl }
+                        : require("../../assets/cover-placeholder.png")
+                    }
                     resizeMode="cover"
                   />
                   <IconButton

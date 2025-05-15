@@ -24,7 +24,7 @@ export default function SearchScreen() {
           <SearchBar
             value={inputSearch}
             onChangeText={setInputSearch}
-            placeholder="Search books ..."
+            placeholder="Search books"
           />
           <BookList query={inputSearch} />
         </View>
