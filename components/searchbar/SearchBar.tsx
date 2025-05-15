@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { useAudioRecorderAndTranscribe } from "../../hooks/useAudioSearch";
 
 export default function SearchBar({
   value,
@@ -11,6 +12,8 @@ export default function SearchBar({
   onChangeText: (inputText: string) => void;
   placeholder: string;
 }) {
+  const { isRecording, handleMicPress } =
+    useAudioRecorderAndTranscribe(onChangeText);
   return (
     <View style={styles.container}>
       <Searchbar
@@ -18,6 +21,8 @@ export default function SearchBar({
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={value}
+        traileringIcon={isRecording ? "stop-circle" : "microphone"}
+        onTraileringIconPress={handleMicPress}
       />
     </View>
   );
