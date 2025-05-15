@@ -4,9 +4,12 @@ import HomeScreen from "../screens/authentication/Home/HomeScreen";
 import BookListScreen from "../screens/authentication/Booklist/BookListScreen";
 import SearchScreen from "../screens/authentication/Search/SearchScreen";
 import AccountScreen from "../screens/authentication/Account/AccountScreen";
+import { useTabStore } from "../store/tabStore";
+
+type TabKey = "home" | "bookList" | "search" | "account";
 
 export default function BottomNavigationBar() {
-  const [index, setIndex] = React.useState(0);
+  const { selectedTab, setSelectedTab } = useTabStore();
 
   const [routes] = React.useState([
     {
@@ -33,6 +36,10 @@ export default function BottomNavigationBar() {
     }
   ]);
 
+  const routeKeys = routes.map((r) => r.key);
+
+  const currentIndex = routeKeys.indexOf(selectedTab);
+
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,
     bookList: BookListScreen,
@@ -42,8 +49,8 @@ export default function BottomNavigationBar() {
 
   return (
     <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
+      navigationState={{ index: currentIndex, routes }}
+      onIndexChange={(i) => setSelectedTab(routeKeys[i] as typeof selectedTab)}
       renderScene={renderScene}
     />
   );

@@ -3,15 +3,13 @@ import { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import * as ImagePicker from "expo-image-picker";
 import { Button, Icon, Text } from "react-native-paper";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Surface } from "react-native-paper";
-import { RootStackParamList } from "../../../types/navigation.types";
+import { useTabStore } from "../../../store/tabStore";
 
 export default function AccountScreen() {
   const { user } = useAuth();
   const [profileImage, setProfileImage] = useState<string | null>(null);
-
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { setSelectedTab } = useTabStore();
 
   const { signOutUser } = useAuth();
 
@@ -61,7 +59,7 @@ export default function AccountScreen() {
         <View style={styles.columns}>
           <Icon source={"bookshelf"} size={30} />
           <View style={{ flex: 1, alignItems: "center", marginRight: 30 }}>
-            <TouchableOpacity onPress={() => navigation.navigate("BookList")}>
+            <TouchableOpacity onPress={() => setSelectedTab("bookList")}>
               <Text>My Booklist</Text>
             </TouchableOpacity>
           </View>
