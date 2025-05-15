@@ -19,8 +19,8 @@ export default function HomeScreen() {
       <View>
         <View style={styles.userText}>
           <Text>
-            <Text variant="headlineLarge">Welcome, </Text>
-            <Text variant="titleLarge" style={{ fontWeight: "bold" }}>
+            <Text variant="headlineMedium">Welcome, </Text>
+            <Text variant="titleMedium" style={{ fontWeight: "bold" }}>
               {user?.displayName || user?.email}!
             </Text>
           </Text>
