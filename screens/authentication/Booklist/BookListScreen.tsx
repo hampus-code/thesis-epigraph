@@ -5,10 +5,11 @@ import { IBook } from "../../../types/IBook";
 import { useAuth } from "../../../hooks/useAuth";
 import BookCard from "../../../components/card/BookCard";
 import { fetchBooklist } from "../../../firebase/bookList";
+import { useBookStore } from "../../../store/bookStore";
 
 export default function BookListScreen() {
-  const [booklist, setBooklist] = useState<IBook[]>([]);
   const { user } = useAuth();
+  const { booklist, setBooklist, removeBook, addBook } = useBookStore();
 
   async function loadBooks() {
     try {
@@ -37,11 +38,8 @@ export default function BookListScreen() {
         renderItem={({ item }) => (
           <BookCard
             book={item}
-            onDelete={() =>
-              setBooklist((prev) =>
-                prev.filter((book) => book.key !== item.key)
-              )
-            }
+            onDelete={() => removeBook(item.key)}
+            onAdd={() => addBook(item)}
           />
         )}
       />
