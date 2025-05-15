@@ -42,27 +42,46 @@ export default function AccountScreen() {
               style={styles.avatar}
             />
           </TouchableOpacity>
-          <Text style={styles.emailText}>{user?.email}</Text>
+          <View style={{ flexDirection: "column" }}>
+            <Text style={styles.profileText}>{user?.email}</Text>
+            <Text style={styles.profileText}>
+              Joined{" "}
+              {user?.metadata.creationTime
+                ? new Intl.DateTimeFormat("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                  }).format(new Date(user.metadata.creationTime))
+                : ""}
+            </Text>
+          </View>
         </Surface>
       </View>
       <Surface style={styles.accountColumn} elevation={1}>
         <View style={styles.columns}>
-          <Icon source={"bookshelf"} size={35} />
-          <TouchableOpacity onPress={() => navigation.navigate("BookList")}>
-            <Text>My Booklist</Text>
-          </TouchableOpacity>
+          <Icon source={"bookshelf"} size={30} />
+          <View style={{ flex: 1, alignItems: "center", marginRight: 30 }}>
+            <TouchableOpacity onPress={() => navigation.navigate("BookList")}>
+              <Text>My Booklist</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.columns}>
-          <Icon source={"account-circle"} size={35} />
 
-          <Text>Edit Profile</Text>
+        <View style={styles.columns}>
+          <Icon source={"account-circle"} size={30} />
+          <View style={{ flex: 1, alignItems: "center", marginRight: 30 }}>
+            <Text>Edit Profile</Text>
+          </View>
         </View>
-        <View style={styles.columns}>
-          <Icon source={"cog"} size={35} />
 
-          <Text>Settings</Text>
+        <View style={styles.columns}>
+          <Icon source={"cog"} size={30} />
+          <View style={{ flex: 1, alignItems: "center", marginRight: 30 }}>
+            <Text>Settings</Text>
+          </View>
         </View>
       </Surface>
+
       <View style={styles.buttonContainer}>
         <Button
           style={styles.signOutButton}
@@ -84,14 +103,13 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    marginBottom: 10,
-    marginTop: 50,
-    marginLeft: 20,
-    justifyContent: "center"
-  },
-  emailText: {
-    fontSize: 16,
+    marginBottom: 25,
+    marginTop: 30,
     marginLeft: 20
+  },
+  profileText: {
+    fontSize: 16,
+    marginLeft: 15
   },
   profileRow: {
     flexDirection: "row",
