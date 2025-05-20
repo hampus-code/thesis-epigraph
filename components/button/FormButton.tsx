@@ -10,7 +10,7 @@ export default function FormButton({
 }) {
   return (
     <View>
-      <Button style={styles.button} mode="outlined" onPress={onPress}>
+      <Button style={styles.button} textColor="black" onPress={onPress}>
         {label}
       </Button>
     </View>
@@ -19,7 +19,11 @@ export default function FormButton({
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 10,
-    width: 115
+    marginTop: 20,
+    width: 150,
+    height: 50,
+    borderRadius: 15,
+    backgroundColor: "#F4AB3C",
+    justifyContent: "center"
   }
 });
