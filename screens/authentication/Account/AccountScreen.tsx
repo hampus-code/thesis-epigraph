@@ -81,11 +81,7 @@ export default function AccountScreen() {
       </Surface>
 
       <View style={styles.buttonContainer}>
-        <Button
-          style={styles.signOutButton}
-          mode="outlined"
-          onPress={() => signOutUser()}
-        >
+        <Button style={styles.signOutButton} onPress={() => signOutUser()}>
           <Text>Sign out</Text>
         </Button>
       </View>
@@ -136,9 +132,10 @@ const styles = StyleSheet.create({
   signOutButton: {
     marginTop: 20,
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     margin: 10,
-    width: 150
+    width: 150,
+    backgroundColor: "#F4AB3C"
   },
   surfaceContainer: {
     overflow: "hidden"
