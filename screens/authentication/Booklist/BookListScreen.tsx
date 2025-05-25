@@ -6,6 +6,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import BookCard from "../../../components/card/BookCard";
 import { fetchBooklist } from "../../../firebase/bookList";
 import { useBookStore } from "../../../store/bookStore";
+import Colors from "../../../types/Colors";
 
 export default function BookListScreen() {
   const { user } = useAuth();
@@ -50,7 +51,8 @@ export default function BookListScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: Colors.background
   },
   headerText: {
     marginTop: 100,

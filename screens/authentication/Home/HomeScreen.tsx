@@ -4,6 +4,7 @@ import AuthorCard from "../../../components/card/AuthorCard";
 import { Text } from "react-native-paper";
 import { useAuth } from "../../../hooks/useAuth";
 import { POPULAR_AUTHORS } from "../../../constants/popularAuthors";
+import Colors from "../../../types/Colors";
 
 export default function HomeScreen() {
   const { user } = useAuth();
@@ -47,7 +48,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80
+    paddingTop: 80,
+    backgroundColor: Colors.background
   },
   bookList: {
     marginBottom: 20

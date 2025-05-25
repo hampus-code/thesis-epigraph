@@ -8,6 +8,7 @@ import {
 import SearchBar from "../../../components/searchbar/SearchBar";
 import { useState } from "react";
 import BookList from "../../../components/list/BookList";
+import Colors from "../../../types/Colors";
 
 export default function SearchScreen() {
   const [inputSearch, setInputSearch] = useState("");
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingBottom: 105
+    paddingBottom: 105,
+    backgroundColor: Colors.background
   }
 });

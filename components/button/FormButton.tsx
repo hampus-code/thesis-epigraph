@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
+import Colors from "../../types/Colors";
 
 export default function FormButton({
   label,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     borderRadius: 15,
-    backgroundColor: "#F4AB3C",
+    backgroundColor: Colors.primary,
     justifyContent: "center"
   }
 });

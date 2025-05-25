@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Button, Icon, Text } from "react-native-paper";
 import { Surface } from "react-native-paper";
 import { useTabStore } from "../../../store/tabStore";
+import Colors from "../../../types/Colors";
 
 export default function AccountScreen() {
   const { user } = useAuth();
@@ -29,7 +30,7 @@ export default function AccountScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.surfaceContainer}>
-        <Surface style={styles.profileRow} elevation={2}>
+        <Surface style={styles.profileRow} elevation={1}>
           <TouchableOpacity onPress={pickImage}>
             <Image
               source={
@@ -91,7 +92,8 @@ export default function AccountScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: Colors.background
   },
   avatar: {
     width: 80,
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     width: 150,
-    backgroundColor: "#F4AB3C"
+    backgroundColor: Colors.primary
   },
   surfaceContainer: {
     overflow: "hidden"
