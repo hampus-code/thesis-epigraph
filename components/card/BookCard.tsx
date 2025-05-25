@@ -7,6 +7,7 @@ import { db } from "../../firebaseConfig";
 import BookModal from "../modal/BookModal";
 import { useBookStore } from "../../store/bookStore";
 import { useState } from "react";
+import Colors from "../../types/Colors";
 
 export default function BookCard({
   book,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     width: 350,
-    backgroundColor: "#F8CA87",
+    backgroundColor: Colors.primary,
     elevation: 5
   },
   bookCover: {

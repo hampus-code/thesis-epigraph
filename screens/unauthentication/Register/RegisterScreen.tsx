@@ -16,6 +16,7 @@ import CustomTextInput from "../../../components/input/CustomTextInput";
 import { useAuth } from "../../../hooks/useAuth";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStackParamList } from "../../../types/navigation.types";
+import Colors from "../../../types/Colors";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -100,7 +101,7 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: Colors.background
   },
   keyboardWrapper: {
     flex: 1

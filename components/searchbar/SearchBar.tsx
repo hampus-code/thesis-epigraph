@@ -15,7 +15,7 @@ export default function SearchBar({
   const { isRecording, handleMicPress } =
     useAudioRecorderAndTranscribe(onChangeText);
   return (
-    <View style={styles.container}>
+    <View>
       <Searchbar
         style={styles.searchBar}
         placeholder={placeholder}
@@ -32,6 +32,5 @@ const styles = StyleSheet.create({
   searchBar: {
     marginTop: 50,
     width: 350
-  },
-  container: {}
+  }
 });
