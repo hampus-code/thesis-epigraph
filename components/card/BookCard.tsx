@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     width: 350,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.secondary,
     elevation: 5
   },
   bookCover: {
